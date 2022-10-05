@@ -1,0 +1,141 @@
+{% extends "home/basic.html" %}
+{% block contactactive %}active{% endblock contactactive %}
+{% block body %}
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <section class="vh-100">
+        <div class="container-fluid h-custom">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5" data-aos="zoom-in-left">
+              <img src="https://img.freepik.com/premium-vector/programmer-semi-flat-color-vector-character-student-figure-sitting-person-white-man-computer-desk-coding-isolated-modern-cartoon-style-illustration-graphic-design-animation_151150-5964.jpg?w=2000"
+                class="img-fluid" alt="Sample image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+              <form action="{% url 'signup' %}" method="POST"  onsubmit="activate_spinner()">
+                {% csrf_token %}
+               
+                <div class="divider d-flex align-items-center my-4">
+                  <h3 class="text-center fw-bold mx-3 mb-0" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">SignUp</h3>
+                </div>
+      
+                <div class="row">
+                    <div class="col-md-6 col-6">
+
+                        <div class="form-outline mb-4">
+                            <input required type="text" name="name" id="name" class="form-control form-control-lg"
+                            placeholder="Full Name" />
+                        
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 col-6">
+                        <div class="form-outline mb-4">
+                            <input required type="text" name="username" id="username" class="form-control form-control-lg"
+                            placeholder="Username" />
+                        
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input required type="email" id="email" name="email" class="form-control form-control-lg"
+                    placeholder="Enter Email Address" />
+                
+                </div>
+               
+                <div class="row">
+                    <div class="col-md-6 col-6">
+
+                        <div class="form-outline mb-4">
+                            <input  onkeyup="validatePassword(this.value);" required type="password" name="password" id="pass" class="form-control form-control-lg"
+                            placeholder="Password" />
+                        
+                        </div>
+                        <p class="small fw-bold mt-2 pt-1 mb-0" >Password Strength: <span id="msg">NIL</span></p>
+
+                    </div>
+                    <div class="col-md-6 col-6">
+                        <div class="form-outline mb-4">
+                            <input required type="password" name="conpassword" id="form3Example3" class="form-control form-control-lg"
+                            placeholder="Confirm Password" />
+                        
+                        </div>
+                    </div>
+                </div>
+               
+      
+               
+      
+                <div class="text-center text-lg-start mt-4 pt-2">
+                    <div id="sign_up_but" >
+
+                    
+                  <input type="submit" class="btn  btn-lg"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;background-color: black; color:white;" value="Create Account"/>
+                </div>
+                      <p class="small fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="{% url 'login' %}"
+                      class="link-danger">Login</a></p>
+                     
+                </div>
+      
+              </form>
+            </div>
+            
+          </div>
+        </div>
+        
+      </section>
+        
+      <script>
+        function activate_spinner()
+{
+  document.getElementById("sign_up_but").innerHTML = "<button  class='btn btn-primary'><span class='spinner-border spinner-border-sm'></span> Please Wait...</button>";
+
+}
+
+function validatePassword(password) {
+                
+                // Do not show anything when the length of password is zero.
+                if (password.length === 0) {
+                    document.getElementById("msg").innerHTML = "";
+                    return;
+                }
+                // Create an array and push all possible values that you want in password
+                var matchedCase = new Array();
+                matchedCase.push("[$@$!%*#?&]"); // Special Charector
+                matchedCase.push("[A-Z]");      // Uppercase Alpabates
+                matchedCase.push("[0-9]");      // Numbers
+                matchedCase.push("[a-z]");     // Lowercase Alphabates
+
+                // Check the conditions
+                var ctr = 0;
+                for (var i = 0; i < matchedCase.length; i++) {
+                    if (new RegExp(matchedCase[i]).test(password)) {
+                        ctr++;
+                    }
+                }
+                // Display it
+                var color = "";
+                var strength = "";
+                switch (ctr) {
+                    case 0:
+                    case 1:
+                    case 2:
+                        strength = "Very Weak";
+                        color = "red";
+                        break;
+                    case 3:
+                        strength = "Medium";
+                        color = "orange";
+                        break;
+                    case 4:
+                        strength = "Strong";
+                        color = "green";
+                        break;
+                }
+                document.getElementById("msg").innerHTML = strength;
+                document.getElementById("msg").style.color = color;
+            }
+
+      </script>
+      {% endblock body %}

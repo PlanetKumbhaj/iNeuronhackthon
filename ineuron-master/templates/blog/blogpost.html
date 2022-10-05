@@ -1,0 +1,125 @@
+{% extends 'home/basic.html' %}
+
+{% block blogacitve %} active {% endblock blogacitve %}
+{% block title %} {{post.title}}{% endblock title %}
+{% block body %}
+{% load extras %}
+{% load social_share %}
+
+<!-- Showing the content of the post -->
+
+<main id="">
+
+  <section class="single-post-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 post-content" data-aos="fade-up">
+
+          <!-- ======= Single Post Content ======= -->
+          <div class="single-post">
+            <div class="post-meta"><span class="date">{{post.category}}</span> <span class="mx-1">&bullet;</span> <span>{{post.timestamp}} by {{post.author.first_name}}</span></div>
+            <h1 class="mb-5">{{post.title}}</h1>
+            {{post.content|safe}}
+
+     
+      
+            
+         
+          </div><!-- End Single Post Content -->
+          <hr>
+         
+          <div class="container" >
+   
+            <i class="fa-regular fa-2x p-2 fa-copy " style="color:rgba(0, 0, 0, 0.67) " onclick="cop()" ></i>
+            <i class="fa-brands fa-2x p-2 fa-linkedin" style="color:skyblue "></i>
+            <i class="fa-brands fa-2x p-2 fa-facebook" style="color: blue;"></i>
+            <i class="fa-brands fa-2x p-2  fa-whatsapp" style="color: green;"></i>
+            <i class="fa-brands fa-2x p-2  fa-instagram" style="color: orange;"></i>
+          </div>
+        
+          <div style="height: 50px">
+          </div>
+      
+        </div>
+        <div class="col-md-3">
+          <!-- ======= Sidebar ======= -->
+          <div class="aside-block">
+
+            <ul class="nav nav-pills custom-tab-nav mb-4" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-popular-tab" data-bs-toggle="pill" data-bs-target="#pills-popular" type="button" role="tab" aria-controls="pills-popular" aria-selected="true">Trending</button>
+              </li>
+            
+            </ul>
+
+            <div class="tab-content" id="pills-tabContent">
+
+             
+              <div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab">
+                {% for post in  trending %}
+                <div class="post-entry-1 border-bottom">
+                  <div class="post-meta"><span class="date">{{post.category}}</span> <span class="mx-1">&bullet;</span> <span>{{post.timestamp}}</span>
+                  <span style="float: right"> {{post.likes}} <i class="fa  fa-thumbs-up"></i> </span></div>
+                  <h2 class="mb-2"><a href="{% url 'slug' post.sno %}" >{{post.title}}</a></h2>
+                  <span class="author mb-3 d-block">{{post.author.first_name}}</span>
+                </div>
+                {% endfor %}
+                
+
+
+                
+              </div> 
+
+              
+                
+
+              </div> 
+
+            </div>
+          </div>
+       
+         
+
+          
+
+          
+
+        </div>
+      </div>
+    </div>
+   
+  </section>
+ 
+</main><!-- End #main -->
+
+ 
+
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+  }
+  </script>
+  
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <script>
+   
+    function cop()
+    {
+     alert("Copied")
+      var dummy = document.createElement('input'),
+    text = window.location.href;
+
+document.body.appendChild(dummy);
+dummy.value = text;
+dummy.select();
+document.execCommand('copy');
+document.body.removeChild(dummy);
+document.getElementById("mesg").innerText = "Copied"
+    }
+    </script>
+
+  <!-- If user is login then only show comments options -->
+
+
+  {% endblock body %}
